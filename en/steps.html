@@ -43,7 +43,7 @@
 	</div>
 	<div class="row">
 	  <div class="small-9 medium-9 large-9 columns">
-	    <h4 class="title">HTTP Input to drive a message flow <action><button class="small radius button" tabindex="0" id="stepsViewDetails" onclick="viewDetails()"> View Details</button> </action></h4>
+	    <h4 class="title">ESQL Database <action><button class="small radius button" tabindex="0" id="stepsViewDetails" onclick="viewDetails()"> View Details</button> </action></h4>
 	  </div>
 	  <div class="small-3 medium-3 large-3 columns">
 		<a href="javascript:;" onclick="openHelpSystem('/com.ibm.etools.msgbroker.helphome.doc/help_home_msgbroker.htm')" class="small right helplink">IBM Knowledge Center</a> 
@@ -52,7 +52,7 @@
 	<hr>
 	<div class="row">
 		<div class="small-10 medium-10 large-10 columns">
-		<h5> Learn how to use an HTTPInput node to parse JSON data in an IBM Integration Bus message flow by exploring this simple example. </h5>
+		<h5> Learn how to use the compute node to modify a HTTP input using ESQL. </h5>
 		</div>
 		<div class="small-2 medium-2 large-2 columns">
 			<button class="small radius button right" tabindex="0" id="backToGallery" onclick="backToGallery()"> Back To Gallery
@@ -82,7 +82,16 @@
 					      	<h4>Import projects</h4>
 					        
 						    
-								<p> The HTTPInputApplication application includes one project that is imported into your workspace. </p>
+								<p> When you click Import, an application will be created in your workspace named <span class="application">Database_ESQL</span>. </p>
+								
+							
+								<p> The application <span class="application">Database_ESQL</span> contains a message flow named <span class="msgflow">Database_ESQL.msgflow</span> which contains a HTTPInput node, compute node and a HTTPReply node. </p>
+								
+							
+								<p> The HTTPInput node has a path suffix <code>/Database_ESQL</code>. </p>
+								
+							
+								<p> The compute node has a datasource property of <code>EMPLOYEE</code>, and is configured to interact with an ESQL module named <code>{default}:Database_ESQL_Compute</code>. </p>
 								
 							
 						</div>
@@ -92,9 +101,14 @@
 							<ul>
 							
 								
-																
-								<li> <a href="javascript:;" onclick="openHelpSystem('/com.ibm.etools.mft.doc/bi12002_.htm')" title="Knowledge Center link to Developing integration solutions by using applications">Developing integration solutions by using applications</a> </li>
-							   	
+								
+								<li> <a href="javascript:;" onclick="openExternalBrowser('https://www.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bz90800_.htm')" title="Working with LoopBack Connectors Working with LoopBack Connectors">Working with LoopBack Connectors</a> </li>
+									
+							
+								
+								
+								<li> <a href="javascript:;" onclick="openExternalBrowser('https://developer.ibm.com/integration/blog/2016/10/13/iib-v10-0-0-6-loopback-request-node-tutorial/')" title="More detailed LoopBackRequest node tutorial More detailed LoopBackRequest node Tutorial">More detailed LoopBackRequest node Tutorial</a> </li>
+									
 							
 							</ul>
 						</div>
@@ -104,7 +118,7 @@
 					<div class="small-2 medium-2 large-2 columns">
 					
 					
-					<h4 class="tkaction"><a href="javascript:;" onclick="importArtifacts(); openResource('MainFlow')"> Import <img class="icon-image" src="http://ot4i.github.io/iib-tutorials/images/icons/ibmdesign/back-right-previous_128-orange.png"></a></h4>
+					<h4 class="tkaction"><a href="javascript:;" onclick="importArtifacts(); openResource('EventRoutingFlow')"> Import <img class="icon-image" src="http://ot4i.github.io/iib-tutorials/images/icons/ibmdesign/back-right-previous_128-orange.png"></a></h4>
 										
 				    </div>
 					
@@ -114,16 +128,67 @@
 					<div class="small-12 medium-12 large-12 columns">
 					
 						<div class="row content-details">
-						  	<h4>Imported projects</h4>
+						  	<h4></h4>
 						    
 						    
-								<p> The HTTPInputApplication application is shown in the Application Development view of your workspace. </p>
+								<p> <h4>Create the DB2 Database</h4> </p>
+								
+								
+									
+									<ol>
+									
+									
+										<li> This tutorial assumes that DB2 has been installed on the local machine.
+										
+										</li>
+									
+										<li> Open up a DB2 command processor window. Ensure you're in the DB2 environment and if not then type <code>DB2</code>.
+										
+										</li>
+									
+										<li> Create a database called <code>EMPLOYEE</code>. The command to create the database is <code> CREATE DB EMPLOYEE </code>.
+										
+										</li>
+									
+										<li> Connect to the database using the command <code>CONNECT TO EMPLOYEE</code>.
+										
+										</li>
+									
+									
+									</ol>
+									
 								
 							
-								<p>  </p>
+								<p> <h4>Configuring the database</h4> </p>
 								
-							
-								<p> The application will be deployed to your default integration server. The message flow is then running on your integration server and ready to process messages. </p>
+								
+									
+									<ol>
+									
+									
+										<li> Included in the application files is a ddl file named <code> CreateScripts.ddl </code>.
+										
+										</li>
+									
+										<li> Open a command prompt window and run the create scripts file with the following command <code> db2 -tf C:\Users\iibadmin\IBM\IIBT10\workspace\Database_ESQL\CreateScript.ddl </code>. The path will be specific to the system. You can verify that the ddl script created the correct tables by running the <code> LIST TABLES </code> command within the DB2 window. This will show the table name and schema name which in our instance is <code> EMPLOYEE_RECORD </code> <code> IIBADMIN </code>. Running a <code> SELECT * FROM "IIBADMIN"."EMPLOYEE_RECORD" </code> where IIBADMIN is the Schema name and EMPLOYEE_RECORD is the table name, will bring up the table headers and the amount of records within the table. The table will be empty until you complete the flow.
+										
+										</li>
+									
+										<li> Once the table has been created you need to run a <code> mqsisetdbparms </code> command. From the Integration Console, run the command <code> mqsisetdbparms TESTNODE_iibadmin -n EMPLOYEE -u iibadmin -p passw0rd </code>. The credentials within the command will need to change to meet the system. After succesfully running the <code> mqsisetdbparms </code> you will need to restart the test node. This can be done by running the following commands <code> mqsistop TESTNODE_iibadmin </code> and <code> mqsistart TESTNODE_iibadmin </code>.
+										
+										</li>
+									
+										<li> The Data Sources (ODBC) needs updating to include the database that has just been made. This can be done by opening Control Panel > Administrative Tools > Data Sources (ODBC) > System DSN. Within this tab click the add button where you will find a list of data sources. Select the DB2 driver. Find the database from within the dropdown and set the data source name equal to the database alias.
+										
+										</li>
+									
+										<li> This will have correctly configured the database ready to open the flow.
+										
+										</li>
+									
+									
+									</ol>
+									
 								
 							
 						</div>
@@ -133,9 +198,14 @@
 							<ul>
 							
 								
-																
-								<li> <a href="javascript:;" onclick="openHelpSystem('/com.ibm.etools.mft.doc/bi12002_.htm')" title="Knowledge Center link to Developing integration solutions by using integration services">Developing integration solutions by using integration services</a> </li>
-							   	
+								
+								<li> <a href="javascript:;" onclick="openExternalBrowser('https://www.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bz90800_.htm')" title="Working with LoopBack Connectors Working with LoopBack Connectors">Working with LoopBack Connectors</a> </li>
+									
+							
+								
+								
+								<li> <a href="javascript:;" onclick="openExternalBrowser('https://developer.ibm.com/integration/blog/2016/10/13/iib-v10-0-0-6-loopback-request-node-tutorial/')" title="More detailed LoopBackRequest node tutorial More detailed LoopBackRequest node Tutorial">More detailed LoopBackRequest node Tutorial</a> </li>
+									
 							
 							</ul>
 						</div>
@@ -148,38 +218,37 @@
 		    		<div class="small-10 medium-10 large-10 columns divider">
 					
 				    	<div class="row content-details">
-					      	<h4>Follow these steps to complete the tutorial</h4>
+					      	<h4>Use the Flow Exerciser to test the tutorial scenario</h4>
 					        
 						    
-								<p> The HTTPInputApplication application is shown in the Application Development view of your workspace. </p>
+								<p> Having prepared the scenario, the following steps describe how to use the Flow Exerciser to test the message flow: </p>
 								
 								
 									
 									<ol>
 									
 									
-										<li> Open the HTTPInputMessageFlow, and click the Flow Exerciser icon <img src="http://ot4i.github.io/ot4i.tutorials//dist/images/icons/iib/startFlowExerciser.png" alt> to start recording the message path through the flow.
+										<li> Open <span class="resource">Database_ESQL.msgflow</span>.
 										
 										</li>
 									
-										<li> Click the Send Message icon <img src="http://ot4i.github.io/ot4i.tutorials/dist/images/icons/iib/sendMessage.png" alt> to select a message to send to the flow.
+										<li> Click the Flow Exerciser icon <img src="http://ot4i.github.io/ot4i.tutorials//dist/images/icons/iib/startFlowExerciser.png" alt> to start testing the flow
 										
 										</li>
 									
-										<li> Choose the ExampleInputMessage1, edit the message data if you like, and click Send. Your request message is sent to the HTTP input node.
+										<li> Click the Send Message icon <img src="http://ot4i.github.io/ot4i.tutorials/dist/images/icons/iib/sendMessage.png" alt>.
 										
+										</li>
+									
+										<li> Select the saved message which has been provided, named <span class="resource">InputMessage</span>, and click Send:<br><span class="resource">{ "FIRSTNAME" : "John", "LASTNAME" : "Doe", "WORKDEPT" : "ABC", "JOB" : "PROGRAMMER", "SALARY" : "152750.00"}</span>
 										
-											
-											<ul>
-											
-												
-													<li> Substep one</li>
-												
-													<li> Substep two</li>
-												
-											
-											</ul>
-											
+										</li>
+									
+										<li> A response will be shown saying that the message succesfully navigated the flow. Return to the DB2 window and run the command <code> SELECT * FROM "IIBADMIN"."EMPLOYEE_RECORD"</code>. The database will now be updated and inlcude the record which was input by the compute node.
+										
+										</li>
+									
+										<li> After you close the dialog, the paths taken through the messageflow are highlighted. Click on the message icon on each connection to see how the tree has been updated by each node.
 										
 										</li>
 									
@@ -188,10 +257,7 @@
 									
 								
 							
-								<p> After the request message is processed, the message path is automatically highlighted on the message flow. </p>
-								
-							
-								<p> Click on any connection to see the data that passed through that connection. You can see that the request (input) message data has two fields named InputField1 and InputField2. The response (output) message has converted this to fields named OutputField1 and OutputField2. </p>
+								<p> This tutorial has shown the compute node receiving and changing a HTTPInput using ESQL and populating a DB2 database with the output. </p>
 								
 							
 						</div>
@@ -201,14 +267,14 @@
 							<ul>
 							
 								
-																
-								<li> <a href="javascript:;" onclick="openHelpSystem('/com.ibm.etools.mft.doc/bi12002_.htm')" title="Knowledge Center link to Developing integration solutions by using applications">Developing integration solutions by using applications</a> </li>
-							   	
+								
+								<li> <a href="javascript:;" onclick="openExternalBrowser('https://www.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bz90800_.htm')" title="Working with LoopBack Connectors Working with LoopBack Connectors">Working with LoopBack Connectors</a> </li>
+									
 							
 								
-																
-								<li> <a href="javascript:;" onclick="openHelpSystem('/com.ibm.etools.mft.doc/rt26110_.htm')" title="Knowledge Center link to Testing your message flow by using the Flow exerciser">Testing your message flow by using the Flow exerciser</a> </li>
-							   	
+								
+								<li> <a href="javascript:;" onclick="openExternalBrowser('https://developer.ibm.com/integration/blog/2016/10/13/iib-v10-0-0-6-loopback-request-node-tutorial/')" title="More detailed LoopBackRequest node tutorial More detailed LoopBackRequest node Tutorial">More detailed LoopBackRequest node Tutorial</a> </li>
+									
 							
 							</ul>
 						</div>
@@ -217,13 +283,6 @@
 					
 					<div class="small-2 medium-2 large-2 columns">
 					
-					
-					
-					<h4 class="tkaction"><a href="javascript:;" onclick="deployArtifacts()"> Deploy <img class="icon-image" src="http://ot4i.github.io/iib-tutorials/images/icons/ibmdesign/back-right-previous_128-orange.png"></a></h4>
-				    
-					
-					
-					<hr>
 					
 					
 					
