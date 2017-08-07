@@ -173,10 +173,10 @@
                                         "details": "This tutorial assumes that DB2 has been installed on the local machine."
                                     },
                                     {
-                                        "details": "Open up a DB2 command processor window. Ensure you're in the DB2 environment and if not then type <code>db2</code>."
+                                        "details": "Open up a DB2 command processor window. Ensure you're in the DB2 environment and if not then type <code>DB2</code>."
                                     },
                                     {
-                                        "details": "Create a database called <code>EMPLOYEE</code>. The command to create the database is <code> CREATE DB EMPLOYEE </code>"
+                                        "details": "Create a database called <code>EMPLOYEE</code>. The command to create the database is <code> CREATE DB EMPLOYEE </code>."
                                     },
                                     {
                                         "details": "Connect to the database using the command <code>CONNECT TO EMPLOYEE</code>."
@@ -192,16 +192,16 @@
                                 "details":
 								[
                                     {
-                                        "details": "Included in the git repository is a ddl file named <code> CreateScripts.ddl </code>."
+                                        "details": "Included in the application files is a ddl file named <code> CreateScripts.ddl </code>."
                                     },
                                     {
-                                        "details": "Open a command prompt window and run the create scripts file with the following command <code> db2 -tf C:\\Users\\iibadmin\\IBM\\IIBT10\\workspace\\Database_ESQL\\CreateScript.ddl </code>. The ddl script will need changing to the system.You can verify that the ddl script has created the correct tables by running the <code> LIST TABLES </code> command within the DB2 window. This will show the table name and schema name which in our instance is <code> EMPLOYEE_RECORD </code> <code> IIBADMIN </code> Running a <code> SELECT * FROM IIBADMIN.EMPLOYEE_RECORD </code> Where IIBADMIN is the Schema name and EMPLOYEE_RECORD is the table name, will bring up the table headers and the amount of records within the table. The table will be empty until you complete the flow."
+                                        "details": "Open a command prompt window and run the create scripts file with the following command <code> db2 -tf C:\\Users\\iibadmin\\IBM\\IIBT10\\workspace\\Database_ESQL\\CreateScript.ddl </code>. The path will be specific to the system. You can verify that the ddl script created the correct tables by running the <code> LIST TABLES </code> command within the DB2 window. This will show the table name and schema name which in our instance is <code> EMPLOYEE_RECORD </code> <code> IIBADMIN </code>. Running a <code> SELECT * FROM \"IIBADMIN\".\"EMPLOYEE_RECORD\" </code> where IIBADMIN is the Schema name and EMPLOYEE_RECORD is the table name, will bring up the table headers and the amount of records within the table. The table will be empty until you complete the flow."
                                     },
                                     {
-                                        "details": "Once the table has been created you need to run a <code> mqsisetdbparms </code> command. From the Integration Console, run the command <code> mqsisetdbparms TESTNODE_iibadmin -n EMPLOYEE -u iibadmin -p passw0rd </code>. The credentials within the command will need to change to meet the system. After succesfully running the <code> mqsisetdbparms </code> you will need to restart the test node. This can be done by running the following commands <code> mqsistop TESTNODE_iibadmin </code> and <code> mqsistart TESTNODE_iibadmin </code>"
+                                        "details": "Once the table has been created you need to run a <code> mqsisetdbparms </code> command. From the Integration Console, run the command <code> mqsisetdbparms TESTNODE_iibadmin -n EMPLOYEE -u iibadmin -p passw0rd </code>. The credentials within the command will need to change to meet the system. After succesfully running the <code> mqsisetdbparms </code> you will need to restart the test node. This can be done by running the following commands <code> mqsistop TESTNODE_iibadmin </code> and <code> mqsistart TESTNODE_iibadmin </code>."
                                     },
                                     {
-                                        "details": "The Data Sources (ODBC) needs updating to include the database that has just been made. This can be done by opening Control Panel > Administrative Tools > Data Sources (ODBC) > System DSN. Within this tab click the add button where you will find a list drivers. Select the DB2 driver. Find the database from within the dropdown and set the data source name equal to the database alias."
+                                        "details": "The Data Sources (ODBC) needs updating to include the database that has just been made. This can be done by opening Control Panel > Administrative Tools > Data Sources (ODBC) > System DSN. Within this tab click the add button where you will find a list of data sources. Select the DB2 driver. Find the database from within the dropdown and set the data source name equal to the database alias."
                                     },
                                     {
                                         "details": "This will have correctly configured the database ready to open the flow."
@@ -256,7 +256,7 @@
                                             "details": "Click the Send Message icon <img src='http://ot4i.github.io/ot4i.tutorials/dist/images/icons/iib/sendMessage.png' alt='' />."
                                         },
                                         {
-                                            "details": "Select the saved message which has been provided, named <span class='resource'>InputMessage</span>, and click Send:<br><span class='resource'>{ \"FIRSTNAME\" : \"John\", \"LASTNAME\" : \"Doe\", \"WORKDEPT\" : \"ABC\", \"JOB\" : \"PROGRAMMER\", \"SALARY\" : \"152750.00\"}</span><br>Your message is sent to the HTTPInput node."
+                                            "details": "Select the saved message which has been provided, named <span class='resource'>InputMessage</span>, and click Send:<br><span class='resource'>{ \"FIRSTNAME\" : \"John\", \"LASTNAME\" : \"Doe\", \"WORKDEPT\" : \"ABC\", \"JOB\" : \"PROGRAMMER\", \"SALARY\" : \"152750.00\"}</span>"
                 				        },
                                         {
                                             "details": "A response will be shown saying that the message succesfully navigated the flow. Return to the DB2 window and run the command <code> SELECT * FROM \"IIBADMIN\".\"EMPLOYEE_RECORD\"</code>. The database will now be updated and inlcude the record which was input by the compute node."
