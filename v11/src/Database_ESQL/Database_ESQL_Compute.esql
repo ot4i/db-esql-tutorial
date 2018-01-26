@@ -1,0 +1,25 @@
+CREATE COMPUTE MODULE Database_ESQL_Compute
+    CREATE FUNCTION Main() RETURNS BOOLEAN
+    BEGIN
+        
+        DECLARE CurrentTimestamp TIMESTAMP CURRENT_TIMESTAMP;                
+        INSERT INTO Database.IIBADMIN.EMPLOYEE_RECORD (FIRSTNAME, LASTNAME, SALARY, WORKDEPT, JOB, CREATION_DATE)
+        VALUES (InputRoot.JSON.Data.FIRSTNAME, InputRoot.JSON.Data.LASTNAME, InputRoot.JSON.Data.SALARY, InputRoot.JSON.Data.WORKDEPT, InputRoot.JSON.Data.JOB, CurrentTimestamp);        
+        DECLARE EmployeeNumber INTEGER;
+        SET EmployeeNumber = THE (SELECT ITEM A.EMPNO FROM Database.IIBADMIN.EMPLOYEE_RECORD AS A WHERE(
+            A.FIRSTNAME = InputRoot.JSON.Data.FIRSTNAME AND
+            A.LASTNAME = InputRoot.JSON.Data.LASTNAME AND
+            A.SALARY = InputRoot.JSON.Data.SALARY AND
+            A.WORKDEPT = InputRoot.JSON.Data.WORKDEPT AND
+            A.JOB = InputRoot.JSON.Data.JOB AND
+            A.CREATION_DATE = CurrentTimestamp)            
+        );        
+        IF (SQLCODE = 0) THEN
+            SET OutputRoot.XMLNSC.Message.Result = 'A row was inserted successfully. The assigned employee number (database column EMPNO) was ' || CAST(EmployeeNumber AS CHAR);
+        ELSE
+            SET OutputRoot.XMLNSC.Message.Result = 'The database return code was ' || CAST(SQLCODE AS CHAR);
+        END IF;
+                
+        RETURN TRUE;
+    END;
+END MODULE;

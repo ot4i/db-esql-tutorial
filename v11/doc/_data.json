@@ -1,0 +1,309 @@
+{
+    "version": "0.1",
+    "pageContent":
+	{
+        "_comments": "JSON object that contains data for page labels, buttons, etc.",
+        "navItems":
+		{
+            "_common":
+			{
+                "buttonBackToGallery":
+				{
+                    "name": "Back To Gallery",
+					"method": "backToGallery()",
+					"idName": "backToGallery"
+                },
+                "buttonStartTutorial":
+				{
+                    "name": "Start Tutorial",
+					"method": "startTutorialFromDetailsScreen()",
+					"idName": "startTutorial"
+                },
+				"buttonViewDetails":
+				{
+                    "name": "View Details",
+					"method": "viewDetails()",
+					"idName": "stepsViewDetails"
+                }
+            }
+        }
+    },
+    "tutorial":
+	{
+        "_common":
+		{
+            "name": "ESQL Database",
+            "shortDescription": "Learn how to use the compute node to modify a HTTP input using ESQL.",
+            "durationText": "This tutorial takes approximately",
+            "durationTime": "10 minutes",
+            "_resourceToOpenComment": "The ID of the first resource to open when the user imports the tutorial. Resource IDs are defined in the repo_metadata.json Tutorials listing on ot4i.",
+            "resourceToOpen": "EventRoutingFlow",
+            "helpLink":
+			{
+                "text": "IBM Knowledge Center",
+                "link": "/com.ibm.etools.msgbroker.helphome.doc/help_home_msgbroker.htm"
+            }
+        },
+        "pageDetails":
+		{
+            "topicsName": "Tutorial Topics",
+            "_topicListComment": "A short list of product concepts or tasks demonstrated by this tutorial",
+            "topicList":
+			[
+                {
+                    "title": "ESQL compute node"
+                },
+                {
+                    "title": "DB2"
+                }
+            ],
+            "outcomesName": "Learning outcomes",
+            "_outcomesComment": "A description of what the user will have learned or accomplished by running this tutorial.",
+            "outcomeList":
+			[
+                {
+                    "title": "Use an ESQL compute node to insert JSON documents into a DB2 database"
+                }
+            ],
+            "summary":
+			{
+                "overviewName": "OVERVIEW",
+                "_overviewComment": "A short description of what happens in this tutorial, and an optional short explanation of the IIB concepts used in this tutorial if necessary for context. What background knowledge must the user have for this to make sense?",
+                "sections":
+				[
+                    {
+                        "section": "This tutorial demonstrates a simple message flow that receives a JSON message over HTTP, and uses a ESQL compute node to insert data into a DB2 database. This tutorial describes how to set up a DB2 database and how to populate the database using an ESQL compute node."
+                    }
+                ]
+            },
+			"helpLinks":
+			{
+				"_helpLinksComment": "Helplinks that have a type:web attribute are rendered as web links. Otherwise, links are assumed to be to embedded Help topics in the Knowledge Center.",
+				"title": "Find out more",
+				"details":
+				[
+					{
+						"title": "Working with LoopBack Connectors",
+						"description": "Working with LoopBack Connectors",
+						"link": "https://www.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bz90800_.htm",
+						"type": "web"
+					},
+					{
+						"title": "More detailed LoopBackRequest node tutorial",
+						"description": "More detailed LoopBackRequest node Tutorial",
+						"link": "https://developer.ibm.com/integration/blog/2016/10/13/iib-v10-0-0-6-loopback-request-node-tutorial/",
+						"type": "web"
+					}
+				]
+			}
+        },
+        "pageSteps":
+		{
+            "create":
+			{
+                "overview":
+				{
+                    "name": "Create",
+                    "heading": "Import projects",
+                    "_createComment": "A description of what will happen when the user clicks Import.",
+                    "sections":
+					[
+                        {
+                            "section": "When you click Import, an application will be created in your workspace named <span class='application'>Database_ESQL</span>."
+                        },
+                        {
+                            "section": "The application <span class='application'>Database_ESQL</span> contains a message flow named <span class='msgflow'>Database_ESQL.msgflow</span> which contains a HTTPInput node, compute node and a HTTPReply node."
+                        },
+                        {
+                            "section": "The HTTPInput node has a path suffix <code>/Database_ESQL</code>."
+                        },
+                        {
+                            "section": "The compute node has a datasource property of <code>EMPLOYEE</code>, and is configured to interact with an ESQL module named <code>{default}:Database_ESQL_Compute</code>."
+                        }
+                    ]
+                },
+                "helpLinks":
+				{
+                    "title": "Find out more",
+                    "details":
+					[
+					{
+						"title": "Working with LoopBack Connectors",
+						"description": "Working with LoopBack Connectors",
+						"link": "https://www.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bz90800_.htm",
+						"type": "web"
+					},
+					{
+						"title": "More detailed LoopBackRequest node tutorial",
+						"description": "More detailed LoopBackRequest node Tutorial",
+						"link": "https://developer.ibm.com/integration/blog/2016/10/13/iib-v10-0-0-6-loopback-request-node-tutorial/",
+						"type": "web"
+					}
+                    ]
+                },
+                "actions":
+				{
+                    "title": "Create Actions",
+                    "details":
+					[
+                        {
+                            "name": "Import",
+                            "method": "importArtifacts()"
+                        }
+                    ]
+                }
+            },
+            "prepare":
+			{
+                "overview":
+				{
+                    "name": "Prepare",
+                    "heading": "",
+                    "_prepareComment": "A description of the required preparation steps.",
+                    "sections":
+					[
+                        {
+                            "section": "<h4>Create the DB2 Database</h4>",
+                            "steps":
+							{
+                                "type": "ordered",
+                                "details":
+								[
+                                    {
+                                        "details": "This tutorial assumes that DB2 has been installed on the local machine."
+                                    },
+                                    {
+                                        "details": "Open up a DB2 command processor window. Ensure you're in the DB2 environment and if not then type <code>DB2</code>."
+                                    },
+                                    {
+                                        "details": "Create a database called <code>EMPLOYEE</code>. The command to create the database is <code> CREATE DB EMPLOYEE </code>."
+                                    },
+                                    {
+                                        "details": "Connect to the database using the command <code>CONNECT TO EMPLOYEE</code>."
+                                    }
+                                ]
+							}
+                        },
+                        {
+                            "section": "<h4>Configuring the database</h4>",
+                            "steps":
+							{
+                                "type": "ordered",
+                                "details":
+								[
+                                    {
+                                        "details": "Included in the application files is a ddl file named <code> CreateScripts.ddl </code>."
+                                    },
+                                    {
+                                        "details": "Open a command prompt window and run the create scripts file with the following command <code> db2 -tf C:\\Users\\iibadmin\\IBM\\IIBT10\\workspace\\Database_ESQL\\CreateScript.ddl </code>. The path will be specific to the system. You can verify that the ddl script created the correct tables by running the <code> LIST TABLES </code> command within the DB2 window. This will show the table name and schema name which in our instance is <code> EMPLOYEE_RECORD </code> <code> IIBADMIN </code>. Running a <code> SELECT * FROM \"IIBADMIN\".\"EMPLOYEE_RECORD\" </code> where IIBADMIN is the Schema name and EMPLOYEE_RECORD is the table name, will bring up the table headers and the amount of records within the table. The table will be empty until you complete the flow."
+                                    },
+                                    {
+                                        "details": "Once the table has been created you need to run a <code> mqsisetdbparms </code> command. From the Integration Console, run the command <code> mqsisetdbparms TESTNODE_iibadmin -n EMPLOYEE -u iibadmin -p passw0rd </code>. The credentials within the command will need to change to meet the system. After succesfully running the <code> mqsisetdbparms </code> you will need to restart the test node. This can be done by running the following commands <code> mqsistop TESTNODE_iibadmin </code> and <code> mqsistart TESTNODE_iibadmin </code>."
+                                    },
+                                    {
+                                        "details": "The Data Sources (ODBC) needs updating to include the database that has just been made. This can be done by opening Control Panel > Administrative Tools > Data Sources (ODBC) > System DSN. Within this tab click the add button where you will find a list of data sources. Select the DB2 driver. Find the database from within the dropdown and set the data source name equal to the database alias."
+                                    },
+                                    {
+                                        "details": "This will have correctly configured the database ready to open the flow."
+                                    }                                ]
+                            }
+                        }
+                    ]
+                },
+                "helpLinks":
+				{
+                    "title": "Find out more",
+                    "details":
+					[
+					{
+						"title": "Working with LoopBack Connectors",
+						"description": "Working with LoopBack Connectors",
+						"link": "https://www.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bz90800_.htm",
+						"type": "web"
+					},
+					{
+						"title": "More detailed LoopBackRequest node tutorial",
+						"description": "More detailed LoopBackRequest node Tutorial",
+						"link": "https://developer.ibm.com/integration/blog/2016/10/13/iib-v10-0-0-6-loopback-request-node-tutorial/",
+						"type": "web"
+					}
+                    ]
+                }
+            },
+            "run":
+			{
+                "overview":
+				{
+                    "name": "Run",
+                    "heading": "Use the Flow Exerciser to test the tutorial scenario",
+                    "_runComment": "The full steps for the user to run through the tutorial. Use 'sections' to render paragraphs, 'steps' with a type of 'ordered' or 'unordered' to render HTML lists, and 'substeps' to render nested lists.",
+                    "sections":
+					[
+                        {
+                            "section": "Having prepared the scenario, the following steps describe how to use the Flow Exerciser to test the message flow:",
+                            "steps":
+							{
+                                "type": "ordered",
+                                "details":
+								[
+                                        {
+                                          "details": "Open <span class='resource'>Database_ESQL.msgflow</span>."
+                                        },
+                                        {
+                                          "details": "Click the Flow Exerciser icon <img src='http://ot4i.github.io/ot4i.tutorials//dist/images/icons/iib/startFlowExerciser.png' alt='' /> to start testing the flow"
+                                        },
+                                        {
+                                            "details": "Click the Send Message icon <img src='http://ot4i.github.io/ot4i.tutorials/dist/images/icons/iib/sendMessage.png' alt='' />."
+                                        },
+                                        {
+                                            "details": "Select the saved message which has been provided, named <span class='resource'>InputMessage</span>, and click Send:<br><span class='resource'>{ \"FIRSTNAME\" : \"John\", \"LASTNAME\" : \"Doe\", \"WORKDEPT\" : \"ABC\", \"JOB\" : \"PROGRAMMER\", \"SALARY\" : \"152750.00\"}</span>"
+                				        },
+                                        {
+                                            "details": "A response will be shown saying that the message succesfully navigated the flow. Return to the DB2 window and run the command <code> SELECT * FROM \"IIBADMIN\".\"EMPLOYEE_RECORD\"</code>. The database will now be updated and inlcude the record which was input by the compute node."
+                				        },
+                    				    {
+                                            "details": "After you close the dialog, the paths taken through the messageflow are highlighted. Click on the message icon on each connection to see how the tree has been updated by each node."
+				                        }
+                                ]
+                            }
+                        },
+            			{
+			                "section": "This tutorial has shown the compute node receiving and changing a HTTPInput using ESQL and populating a DB2 database with the output."
+			            }
+                    ]
+                },
+                "helpLinks":
+				{
+                    "title": "Find out more",
+                    "details":
+					[
+					{
+						"title": "Working with LoopBack Connectors",
+						"description": "Working with LoopBack Connectors",
+						"link": "https://www.ibm.com/support/knowledgecenter/SSMKHH_10.0.0/com.ibm.etools.mft.doc/bz90800_.htm",
+						"type": "web"
+					},
+					{
+						"title": "More detailed LoopBackRequest node tutorial",
+						"description": "More detailed LoopBackRequest node Tutorial",
+						"link": "https://developer.ibm.com/integration/blog/2016/10/13/iib-v10-0-0-6-loopback-request-node-tutorial/",
+						"type": "web"
+					}
+                    ]
+                },
+				"exits":
+				{
+					"title": "Run Exits",
+					"details":
+					[
+						{
+							"name": "Clean Up",
+							"description": "Clean up and remove any changes in your workspace made by the tutorial.",
+							"method": "cleanUp()"
+						}
+					]
+				}
+            }
+        }
+    }
+}
